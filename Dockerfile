@@ -8,11 +8,11 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies
-RUN npm install
+RUN cd src && npm install
 
 # Copy the rest of project files into this image
 # Expose application port
 EXPOSE 8082
 
 # Start the application
-CMD  node index.js
+CMD cd src && node index.js

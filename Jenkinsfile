@@ -8,7 +8,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
+        stage('Jenkins <--- GITHUB') {
             steps {
                 // Checkout code from GitHub repository
                 git credentialsId: 'GitPAT', url: 'https://github.com/teddy-teem/experiment-server.git'

@@ -1,0 +1,7 @@
+FROM jenkins/jenkins:lts-jdk11
+
+USER root
+RUN apt-get update && \
+apt-get -qy full-upgrade && \
+apt-get install -y -qy curl && curl https://get.docker.com/ > dockerinstall && chmod 777 dockerinstall && ./dockerinstall
+USER jenkins

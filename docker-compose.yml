@@ -2,16 +2,20 @@ version: "3"
 
 services:
   node_app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: node_app
     restart: always
     volumes:
       - .:/app
     ports:
-      - "8082:8082" # Adjust port as needed
+      - "8082:8082" # Adjust port as neededs
 
   jenkins:
-    image: jenkins/jenkins:lts
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
     container_name: jenkins
     restart: always
     ports:
