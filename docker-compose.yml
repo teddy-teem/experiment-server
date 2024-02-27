@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  node_app:
+    build: .
+    container_name: node_app
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - "8082:8082" # Adjust port as needed
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    restart: always
+    ports:
+      - "8080:8080" # Jenkins UI
+      - "50000:50000" # Jenkins Slave
+    volumes:
+      - ./jenkins_home:/var/jenkins_home

@@ -5,16 +5,14 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy package.json and package-lock.json to the /app directory
-COPY ./src/package.json ./src/package-lock.json ./src/
-
-# Install dependencies
-RUN cd ./src && npm install
-
-# Copy the rest of project files into this image
 COPY . .
 
+# Install dependencies
+RUN npm install
+
+# Copy the rest of project files into this image
 # Expose application port
-EXPOSE 8081
+EXPOSE 8082
 
 # Start the application
-CMD cd ./src && node index.js
+CMD  node index.js
