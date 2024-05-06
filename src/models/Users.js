@@ -1,9 +1,22 @@
-exports.getUsers = async (ctx) => {
+exports.getUser = async (ctx, userId) => {
   try {
-    // const [results, fields] = await ctx.dbConnection.execute(
-    //   "SELECT * FROM `Users`"
-    // );
-    return true;
+    const { Users } = ctx.sequelize.models;
+    const res = await Users.findByPk(userId);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+exports.getUserByEmail = async (ctx, email) => {
+  try {
+    const { Users } = ctx.sequelize.models;
+    const res = await Users.findAll({ where: { email: email } });
+    return {
+      userId: res[0].userId,
+      email: res[0].email,
+      firstName: res[0].firstName,
+      lastName: res[0].lastName,
+    };
   } catch (error) {
     throw error;
   }
@@ -11,14 +24,9 @@ exports.getUsers = async (ctx) => {
 
 exports.createUsers = async (ctx, user) => {
   try {
-    // const [results, fields, error] = await ctx.dbConnection.execute(
-    //   `INSERT INTO Users (userId, firstName, lastName, email, address, dob) VALUES (${user.userId}, ${user.firstName}, ${user.lastName}, ${user.email}, ${user.address}, ${user.dob} )`
-    // );
-    // const [results, fields, error] = await ctx.dbConnection
-    //   .execute(`INSERT INTO Users (userId, firstName, lastName, email, address, dob)
-    // VALUES ('7a64cb3c-15bf-436d-a0da-a0f95fc133fa', 'Leticia', 'Hyde', 'leticia_hyde@mailinator.com', '52 Dunham Place, Coldiron, Oklahoma', '1993-08-10')`);
-    // console.log(error);
-    return {};
+    const { Users } = ctx.sequelize.models;
+    const res = await Users.create(user);
+    return res;
   } catch (error) {
     throw error;
   }

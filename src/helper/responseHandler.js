@@ -1,5 +1,4 @@
 exports.successResponse = (ctx, res, status = 200) => {
-  console.log(res);
   ctx.status = status;
   ctx.body = { data: res, responseStatus: "Successful", statusCode: status };
 };

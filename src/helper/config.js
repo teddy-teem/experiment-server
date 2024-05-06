@@ -1,8 +1,8 @@
 const { getDbConnection } = require("../helper/dbConnector");
-const { log } = require("./logger");
+const { log, logger } = require("./logger");
 
 exports.attachDbConnectionWithCtx = async (ctx, next) => {
-  ctx.dbConnection = await getDbConnection({
+  ctx.sequelize = await getDbConnection({
     database: "experimental",
   });
   await next();

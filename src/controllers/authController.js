@@ -2,40 +2,63 @@ const {
   successResponse,
   failedResponse,
 } = require("../helper/responseHandler");
-const { getUsers, createUsers } = require("../models/Users");
-const mockUser = require("../../mockUser.json");
-const { v4: uuidv4, v4 } = require("uuid");
+const authService = require("../services/authService");
+const userService = require("../services/userService");
+const bcrypt = require("bcrypt");
 
 exports.login = async (ctx) => {
   try {
-    const res = await getUsers(ctx);
-    return successResponse(ctx, res, 200);
+    const { email, password } = ctx.request.body;
+    const authDetails = await authService.getAuthDetailsByEmail(ctx, email);
+    const isPasswordMatched = await bcrypt.compare(
+      password,
+      authDetails.hashPassword
+    );
+
+    if (!isPasswordMatched) {
+      throw { status: 404, message: "Passwords are not matched." };
+    }
+
+    const userDetails = await userService.getUserByEmail(ctx, email);
+    const loginResponse = await authService.login(ctx, userDetails);
+
+    return successResponse(ctx, { accessToken: loginResponse }, 200);
   } catch (error) {
     failedResponse(ctx, error);
   }
 };
 
-exports.createRandomUsers = async (ctx) => {
+exports.register = async (ctx) => {
+  const transaction = await ctx.sequelize.transaction();
   try {
-    console.log(mockUser.length);
-    console.time("user-create");
-    mockUser.forEach(async (data) => {
-      await createUsers(ctx, {
-        userId: uuidv4(),
-        firstName: data.firstName,
-        lastName: data.lastName,
-        address: data.address,
-        email: data.email,
-        dob: data.dob,
-      }).catch((e) => {
-        throw e;
-      });
+    const {
+      email,
+      password,
+      confirmPassword,
+      firstName,
+      lastName,
+      dob,
+      address,
+    } = ctx.request.body;
+    const authResponse = await authService.register(ctx, {
+      email,
+      password,
+      confirmPassword,
     });
-    console.timeEnd("user-create");
-
-    successResponse(ctx, { message: "Successfully created" }, 200);
+    const userResponse = await userService.createUser(ctx, {
+      email,
+      authId: authResponse.authId,
+      firstName,
+      lastName,
+      dob,
+      address,
+    });
+    await transaction.commit();
+    successResponse(ctx, userResponse, 201);
   } catch (error) {
-    console.log(error);
-    failedResponse(error);
+    if (transaction) {
+      transaction.rollback();
+    }
+    failedResponse(ctx, error);
   }
 };
