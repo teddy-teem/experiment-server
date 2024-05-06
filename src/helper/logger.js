@@ -13,7 +13,8 @@ exports.logger = bunyan.createLogger({
 exports.log = async (ctx, next) => {
   await next();
   this.logger.info({
-    req: ctx.request,
+    req: ctx.request.body,
+    // header: ctx.request.header,
     ip: ctx.request.ip,
     res: ctx.response.body,
   });

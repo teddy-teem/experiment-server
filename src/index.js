@@ -7,7 +7,7 @@ const publicRouter = require("./routes/public");
 const privateRouter = require("./routes/private");
 const { logger, log } = require("./helper/logger");
 const { attachDbConnectionWithCtx } = require("./helper/config");
-const AuthMiddleware = require("./midleware/AuthMidleware");
+const AuthMiddleware = require("./middleware/AuthMiddleware");
 
 const app = new koa();
 
