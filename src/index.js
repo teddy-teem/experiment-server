@@ -8,6 +8,7 @@ const privateRouter = require("./routes/private");
 const { logger, log } = require("./helper/logger");
 const { attachDbConnectionWithCtx } = require("./helper/config");
 const AuthMiddleware = require("./middleware/AuthMiddleware");
+const { failedResponse } = require("./helper/responseHandler");
 
 const app = new koa();
 
@@ -20,6 +21,7 @@ app.use(privateRouter.routes());
 
 app.on("error", (err, ctx) => {
   logger.error({ err }, "Error occurred");
+  failedResponse(ctx, err);
 });
 app.listen(variables.appPort, () => {
   logger.info(`Service is running on ${variables.appPort}`);
