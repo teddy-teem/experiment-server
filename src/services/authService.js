@@ -37,7 +37,7 @@ exports.getAuthDetailsByEmail = async (ctx, email) => {
 exports.login = async (ctx, userDetails) => {
   try {
     const token = jwt.sign({ userId: userDetails.userId }, secretKey, {
-      expiresIn: "1m",
+      expiresIn: "10h",
     });
     return token;
   } catch (error) {

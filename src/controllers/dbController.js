@@ -1,7 +1,4 @@
-const {
-  successResponse,
-  failedResponse,
-} = require("../helper/responseHandler");
+const { successResponse, failedResponse } = require("../utils/responseHandler");
 const { getTableList } = require("../models/DBDetails");
 
 exports.getTableList = async (ctx) => {

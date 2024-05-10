@@ -1,7 +1,4 @@
-const {
-  failedResponse,
-  successResponse,
-} = require("../helper/responseHandler");
+const { failedResponse, successResponse } = require("../utils/responseHandler");
 const UserService = require("../services/userService");
 
 exports.createUser = async (ctx) => {

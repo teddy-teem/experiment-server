@@ -1,7 +1,4 @@
-const {
-  successResponse,
-  failedResponse,
-} = require("../helper/responseHandler");
+const { successResponse, failedResponse } = require("../utils/responseHandler");
 const authService = require("../services/authService");
 const userService = require("../services/userService");
 const bcrypt = require("bcrypt");

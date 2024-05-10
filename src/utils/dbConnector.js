@@ -4,6 +4,8 @@ const { Sequelize } = require("sequelize");
 const variables = require("../variables/index");
 const { UserSchema } = require("../schemas/Users.schema");
 const { AuthSchema } = require("../schemas/Auth.schema");
+const { PageSchema } = require("../schemas/Pages.schema");
+const { CTRSchema } = require("../schemas/CTR.schema");
 
 exports.getDbConnection = async (config) => {
   try {
@@ -26,6 +28,12 @@ exports.getDbConnection = async (config) => {
     });
     sequelize.define("Auth", AuthSchema, {
       tableName: "Auth",
+    });
+    sequelize.define("Pages", PageSchema, {
+      tableName: "Pages",
+    });
+    sequelize.define("CTR", CTRSchema, {
+      tableName: "CTR",
     });
 
     await sequelize.sync({ alter: true });

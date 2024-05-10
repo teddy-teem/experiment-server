@@ -1,4 +1,4 @@
-const { getDbConnection } = require("../helper/dbConnector");
+const { getDbConnection } = require("./dbConnector");
 const { log, logger } = require("./logger");
 
 exports.attachDbConnectionWithCtx = async (ctx, next) => {

@@ -1,4 +1,4 @@
-const { failedResponse } = require("../helper/responseHandler");
+const { failedResponse } = require("../utils/responseHandler");
 const jwt = require("jsonwebtoken");
 const { secretKey } = require("../variables");
 
