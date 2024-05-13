@@ -34,12 +34,16 @@ exports.generateDifferentPromotionPageByHTMLExample = async (ctx, html) => {
 
 exports.generateDifferentPromotionPageByHTMLExampleV2 = async (ctx, html) => {
   try {
-    const result = await extractTextContent(
+    const phrases = await extractTextContent(
       html.replace(/\\n/g, "").replace(/\\t/g, "")
     );
     // console.log("=====RES", result);
+    // const res = await askGPT(
+    //   `Generate 4 alternative for each of these ${result} text but do not change brand name, or any numeric value, if there is no alternative of that text then keep that text's copy on response & response me like [{"${result[0]}": ["alternative1", "alternative2", "alternative3", "alternative4"]}, {"${result[1]}": ["alternative1", "alternative2", "alternative3", "alternative4"]}, {"${result[2]}": ["alternative1", "alternative2", "alternative3", "alternative4"]}, ........]`
+    // );
+
     const res = await askGPT(
-      `Generate 4 alternative for each of these ${result} text but do not change brand name, or any numeric value, if there is no alternative of that text then keep that text's copy on response & response me like [{"${result[0]}": ["alternative1", "alternative2", "alternative3", "alternative4"]}, {"${result[1]}": ["alternative1", "alternative2", "alternative3", "alternative4"]}, {"${result[2]}": ["alternative1", "alternative2", "alternative3", "alternative4"]}, ........]`
+      `Let's generate 4 alternative phrase of these phrase ${phrases} and response those in the following format [{"${phrases[0]}": ["alternative1", "alternative2", "alternative3", "alternative4"]}, {"${phrases[1]}": ["alternative1", "alternative2", "alternative3", "alternative4"]}, {"${phrases[2]}": ["alternative1", "alternative2", "alternative3", "alternative4"]}, ........]`
     );
 
     console.log("========", res);

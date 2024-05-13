@@ -6,8 +6,8 @@ const ctrController = require("../controllers/ctrController");
 const routes = new router();
 
 routes.get("/health", healthController.health);
-routes.get("/api/v1/ctr/:pageId", ctrController.countCTR);
 routes.post("/api/v1/login", authController.login);
 routes.post("/api/v1/register", authController.register);
+routes.get("/api/v1/ctr/:pageId", ctrController.countCTR);
 
 module.exports = routes;

@@ -1,6 +1,15 @@
-exports.successResponse = (ctx, res, status = 200) => {
+exports.successResponse = (
+  ctx,
+  { data = null, message = "success", info = null, status = 200, link = null }
+) => {
   ctx.status = status;
-  ctx.body = { data: res, responseStatus: "Successful", statusCode: status };
+  ctx.body = {
+    message: message,
+    info: info,
+    data: data,
+    statusCode: status,
+    link: link,
+  };
 };
 
 exports.failedResponse = (ctx, error) => {
@@ -13,6 +22,7 @@ exports.failedResponse = (ctx, error) => {
     message: error.message,
     responseStatus: "Failed",
     statusCode: ctx.status,
+    hints: error?.hints,
   };
   return;
 };

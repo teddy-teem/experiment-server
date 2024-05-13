@@ -39,6 +39,7 @@ exports.login = async (ctx, userDetails) => {
     const token = jwt.sign({ userId: userDetails.userId }, secretKey, {
       expiresIn: "10h",
     });
+    console.log(token);
     return token;
   } catch (error) {
     throw error;

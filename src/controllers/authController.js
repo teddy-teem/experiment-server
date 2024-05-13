@@ -1,11 +1,17 @@
+const bcrypt = require("bcrypt");
+
 const { successResponse, failedResponse } = require("../utils/responseHandler");
 const authService = require("../services/authService");
 const userService = require("../services/userService");
-const bcrypt = require("bcrypt");
+const {
+  validateRegisterRequestBody,
+  validateLoginRequestBody,
+} = require("../utils/validator");
 
 exports.login = async (ctx) => {
   try {
     const { email, password } = ctx.request.body;
+    validateLoginRequestBody({ email, password });
     const authDetails = await authService.getAuthDetailsByEmail(ctx, email);
     const isPasswordMatched = await bcrypt.compare(
       password,
@@ -19,7 +25,11 @@ exports.login = async (ctx) => {
     const userDetails = await userService.getUserByEmail(ctx, email);
     const loginResponse = await authService.login(ctx, userDetails);
 
-    return successResponse(ctx, { accessToken: loginResponse }, 200);
+    return successResponse(ctx, {
+      data: { accessToken: loginResponse },
+      link: { user: "/user" },
+      status: 200,
+    });
   } catch (error) {
     failedResponse(ctx, error);
   }
@@ -37,11 +47,28 @@ exports.register = async (ctx) => {
       dob,
       address,
     } = ctx.request.body;
+
+    validateRegisterRequestBody({
+      email,
+      password,
+      confirmPassword,
+      firstName,
+      lastName,
+      dob,
+      address,
+    });
+
+    const user = await authService.getAuthDetailsByEmail(ctx, email);
+    if (user.email) {
+      throw { status: 400, message: "User is already exists with this email." };
+    }
+
     const authResponse = await authService.register(ctx, {
       email,
       password,
       confirmPassword,
     });
+
     const userResponse = await userService.createUser(ctx, {
       email,
       authId: authResponse.authId,
@@ -50,8 +77,13 @@ exports.register = async (ctx) => {
       dob,
       address,
     });
+
     await transaction.commit();
-    successResponse(ctx, userResponse, 201);
+    successResponse(ctx, {
+      data: userResponse,
+      message: "Registration successful",
+      link: { login: "/login" },
+    });
   } catch (error) {
     if (transaction) {
       transaction.rollback();

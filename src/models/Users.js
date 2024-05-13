@@ -2,7 +2,16 @@ exports.getUser = async (ctx, userId) => {
   try {
     const { Users } = ctx.sequelize.models;
     const res = await Users.findByPk(userId);
-    return res;
+    return {
+      userId: res.userId,
+      email: res.email,
+      firstName: res.firstName,
+      lastName: res.lastName,
+      dob: res.dob,
+      address: res.address,
+      createdAt: res.createdAt,
+      updatedAt: res.updatedAt,
+    };
   } catch (error) {
     throw error;
   }

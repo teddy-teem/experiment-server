@@ -10,7 +10,7 @@ exports.countCTR = async (ctx) => {
       pageId,
       component: params.contentData,
     });
-    successResponse(ctx, res);
+    successResponse(ctx, { data: res, message: "Counted successfully" });
   } catch (error) {
     failedResponse(ctx, error);
   }

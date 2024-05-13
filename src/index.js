@@ -9,7 +9,6 @@ const publicRouter = require("./routes/public");
 const privateRouter = require("./routes/private");
 const { logger, log } = require("./utils/logger");
 const { attachDbConnectionWithCtx } = require("./utils/config");
-const AuthMiddleware = require("./middleware/AuthMiddleware");
 const { failedResponse } = require("./utils/responseHandler");
 
 const app = new koa();
@@ -19,7 +18,6 @@ app.use(cors());
 app.use(log);
 app.use(attachDbConnectionWithCtx);
 app.use(publicRouter.routes());
-app.use(AuthMiddleware.verifyToken);
 app.use(privateRouter.routes());
 
 app.on("error", (err, ctx) => {

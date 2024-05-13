@@ -17,7 +17,11 @@ exports.createCampaign = async (ctx) => {
       ctx,
       htmlContent
     );
-    successResponse(ctx, a);
+    successResponse(ctx, {
+      data: a,
+      link: { user: "/user" },
+      status: 201,
+    });
   } catch (error) {
     failedResponse(ctx, error);
   }
@@ -30,7 +34,7 @@ exports.createCampaignV2 = async (ctx) => {
       ctx,
       htmlContent
     );
-    successResponse(ctx, a);
+    successResponse(ctx, { data: a, status: 201 });
   } catch (error) {
     failedResponse(ctx, error);
   }
@@ -40,7 +44,7 @@ exports.getCampaignPages = async (ctx) => {
   try {
     const { userId } = ctx.request.body;
     // const a = await generateMultipleContent(ctx, htmlContent);
-    successResponse(ctx, []);
+    successResponse(ctx, { message: "will implement soon" });
   } catch (error) {
     failedResponse(ctx, error);
   }
@@ -50,7 +54,7 @@ exports.getCampaignPageById = async (ctx) => {
   try {
     const { pageId } = ctx.request.params;
     const res = await pageService.getPageById(ctx, pageId);
-    successResponse(ctx, res);
+    successResponse(ctx, { data: res });
   } catch (error) {
     failedResponse(ctx, error);
   }
@@ -60,7 +64,7 @@ exports.getCampaignCTRById = async (ctx) => {
   try {
     const { pageId } = ctx.request.params;
     const res = await ctrService.getCTR(ctx, pageId);
-    successResponse(ctx, res);
+    successResponse(ctx, { data: res });
   } catch (error) {
     failedResponse(ctx, error);
   }

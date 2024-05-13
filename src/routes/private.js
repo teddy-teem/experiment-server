@@ -1,9 +1,11 @@
 const router = require("koa-router");
 const userController = require("../controllers/userController");
 const campaignController = require("../controllers/campaignController");
+const { verifyToken } = require("../middleware/AuthMiddleware");
 
 const routes = new router();
 
+routes.use(verifyToken);
 routes.get("/api/v1/user", userController.getUser);
 routes.post("/api/v1/campaign", campaignController.createCampaign);
 routes.post("/api/v2/campaign", campaignController.createCampaignV2);

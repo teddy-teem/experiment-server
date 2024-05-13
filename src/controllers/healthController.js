@@ -1,3 +1,5 @@
+const { successResponse } = require("../utils/responseHandler");
+
 exports.health = (ctx) => {
-  ctx.body = { status: "200", message: "success" };
+  successResponse(ctx, { data: null, message: "I am healthy" });
 };

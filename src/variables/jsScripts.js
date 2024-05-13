@@ -1,7 +1,7 @@
 exports.getCTRFunction = (uuid) =>
   `function makeCTR(contentId, contentData) {
     fetch(
-      "http://192.168.9.75:8082/api/v1/ctr/${uuid}?contentId=" +
+      "http://192.168.11.68:8082/api/v1/ctr/${uuid}?contentId=" +
         contentId +
         "&contentData="+
         contentData
