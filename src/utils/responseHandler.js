@@ -7,7 +7,6 @@ exports.successResponse = (
     message: message,
     info: info,
     data: data,
-    statusCode: status,
     link: link,
   };
 };

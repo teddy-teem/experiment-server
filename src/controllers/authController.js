@@ -10,6 +10,9 @@ const {
 
 exports.login = async (ctx) => {
   try {
+    if (!ctx.request.body?.email || !ctx.request.body?.password) {
+      throw { status: 400, message: "Email/Password  is not valid." };
+    }
     const { email, password } = ctx.request.body;
     validateLoginRequestBody({ email, password });
     const authDetails = await authService.getAuthDetailsByEmail(ctx, email);

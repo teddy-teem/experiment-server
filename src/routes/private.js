@@ -1,6 +1,7 @@
 const router = require("koa-router");
 const userController = require("../controllers/userController");
 const campaignController = require("../controllers/campaignController");
+const ollamaController = require("../controllers/ollamaController");
 const { verifyToken } = require("../middleware/AuthMiddleware");
 
 const routes = new router();
@@ -18,5 +19,6 @@ routes.get(
   "/api/v1/campaign/ctr/:pageId",
   campaignController.getCampaignCTRById
 );
+routes.post("/api/v1/ollama/ask", ollamaController.askOllama);
 
 module.exports = routes;
