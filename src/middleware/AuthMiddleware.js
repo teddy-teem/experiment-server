@@ -7,7 +7,6 @@ const { validateJWT } = require("../utils/validator");
 exports.verifyToken = async (ctx, next) => {
   try {
     let token = ctx.request.header.authorization;
-    // validateJWT(token);
     token = token.replace(/^Bearer\s+/, "");
     const decoded = jwt.verify(token, secretKey);
     const userDetails = await getUser(ctx, decoded.userId);
@@ -20,6 +19,7 @@ exports.verifyToken = async (ctx, next) => {
     ctx.request.body.userId = decoded.userId;
     await next();
   } catch (error) {
+    console.log(error);
     failedResponse(ctx, error);
   }
 };

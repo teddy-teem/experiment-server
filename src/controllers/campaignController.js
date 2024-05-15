@@ -5,6 +5,7 @@ const {
 } = require("../services/gptService");
 const ctrService = require("../services/ctrService");
 const HTML = require("html-parse-stringify");
+const fs = require("fs").promises;
 
 const pageService = require("../services/pageService");
 
@@ -65,6 +66,21 @@ exports.getCampaignCTRById = async (ctx) => {
     const { pageId } = ctx.request.params;
     const res = await ctrService.getCTR(ctx, pageId);
     successResponse(ctx, { data: res });
+  } catch (error) {
+    failedResponse(ctx, error);
+  }
+};
+
+exports.downloadCampaignScript = async (ctx) => {
+  try {
+    const jsFile = await fs.readFile(
+      __dirname + "/../" + "assets/myJs.js",
+      "utf-8"
+    );
+    // console.log("===========", jsFile);
+    ctx.set("Content-Disposition", 'attachment; filename="yourfile.js"');
+    ctx.type = "application/javascript";
+    ctx.body = "hello world";
   } catch (error) {
     failedResponse(ctx, error);
   }
