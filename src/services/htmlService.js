@@ -107,7 +107,8 @@ exports.replaceTextAndGenerateHTML = async (
   { numberOfPage, replacements }
 ) => {
   const modifiedHTMLs = [];
-  console.log(replacements.length);
+  const campaignId = uuidv4();
+
   for (let i = 0; i < numberOfPage; i++) {
     let newHtml = html;
     for (let j = 0; j < replacements.length; j++) {
@@ -119,10 +120,11 @@ exports.replaceTextAndGenerateHTML = async (
       .replace(newHtml[newHtml.length - 1], "");
     const id = uuidv4();
     const attachedFun = await this.attachCTRMethod(cleanedNewHtml, id);
-    createPage(ctx, {
+    await createPage(ctx, {
       htmlContent: attachedFun,
       pageId: id,
       userId: ctx.request.userId,
+      campaignId,
     });
     modifiedHTMLs.push({
       pageId: id,
@@ -130,5 +132,5 @@ exports.replaceTextAndGenerateHTML = async (
     });
   }
 
-  return modifiedHTMLs;
+  return { modifiedHTMLs, campaignId };
 };

@@ -5,6 +5,8 @@ const mysqlPassword = `${process.env.MYSQL_PASSWORD}#*`;
 const hashSalt = 10;
 const secretKey = "your-secret-key";
 const gptApiKey = process.env.GPT_API_KEY || "";
+const githubUsername = process.env.GITHUB_USERNAME || "";
+const githubPat = process.env.GITHUB_PAT || "";
 
 const variables = {
   appPort,
@@ -14,6 +16,8 @@ const variables = {
   hashSalt,
   secretKey,
   gptApiKey,
+  githubPat,
+  githubUsername,
 };
 
 module.exports = variables;

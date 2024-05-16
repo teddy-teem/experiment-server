@@ -14,6 +14,10 @@ routes.get(
   "/api/v1/campaign/download/:pageId",
   campaignController.downloadCampaignScript
 );
+routes.get(
+  "/api/v1/campaign/scripts/:campaignId",
+  campaignController.getCampaignScripts
+);
 routes.get("/api/v1/campaign/pages", campaignController.getCampaignPages);
 routes.get(
   "/api/v1/campaign/pages/:pageId",

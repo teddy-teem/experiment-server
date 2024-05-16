@@ -3,6 +3,10 @@ const healthController = require("../controllers/healthController");
 const authController = require("../controllers/authController");
 const ctrController = require("../controllers/ctrController");
 const ollamaController = require("../controllers/ollamaController");
+const {
+  getCampaignCTRById,
+  getCampaignsById,
+} = require("../controllers/campaignController");
 
 const routes = new router();
 
@@ -110,5 +114,6 @@ routes.get("/health", healthController.health);
 routes.post("/api/v1/login", authController.login);
 routes.post("/api/v1/register", authController.register);
 routes.get("/api/v1/ctr/:pageId", ctrController.countCTR);
+routes.get("/api/v1/campaign/:campaignId", getCampaignsById);
 
 module.exports = routes;

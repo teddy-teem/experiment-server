@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "@octokit/rest": "^20.1.1",
     "koa2-swagger-ui": "^5.10.0",
+    "octokit": "^4.0.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-koa": "^0.0.1"
   }

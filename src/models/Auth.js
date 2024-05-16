@@ -14,7 +14,7 @@ exports.getAuthDetailsByEmail = async (ctx, email) => {
     const { Auth } = ctx.sequelize.models;
     const resp = await Auth.findByPk(email);
     if (!resp) {
-      throw { status: 404, message: "User not found." };
+      return {};
     }
     return { email: resp.email, hashPassword: resp.password };
   } catch (error) {
