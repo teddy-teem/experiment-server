@@ -14,7 +14,7 @@ exports.getDbConnection = async (config) => {
     const sequelize = new Sequelize({
       dialect: "mysql",
       host: "localhost",
-      username: "root",
+      username: "vuteem",
       password: variables.mysqlPassword,
       database: config?.database || "experimental",
       logging: false,
